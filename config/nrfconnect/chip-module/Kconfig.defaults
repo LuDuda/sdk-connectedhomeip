@@ -68,6 +68,9 @@ config SHELL
 config SHELL_MINIMAL
     default y
 
+config LTO
+    default y
+
 # Enable getting reboot reasons information
 config HWINFO
 	bool
