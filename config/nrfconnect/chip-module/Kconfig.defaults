@@ -61,6 +61,12 @@ config CHIP_MALLOC_SYS_HEAP_SIZE
 config NVS_LOOKUP_CACHE_SIZE
     default 512
 
+config LTO
+    default y
+
+config ISR_TABLES_LOCAL_DECLARATION
+    default y
+
 # ==============================================================================
 # Zephyr networking configuration
 # ==============================================================================

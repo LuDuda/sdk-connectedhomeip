@@ -60,6 +60,11 @@ if (CONFIG_ARM)
     matter_add_cflags(--specs=nosys.specs)
 endif()
 
+if (CONFIG_LTO)
+matter_add_cflags(-flto)
+matter_add_cxxflags(-flto)
+endif()
+
 if (CONFIG_NRF_SECURITY)
     zephyr_include_directories($<TARGET_PROPERTY:mbedtls_external,INTERFACE_INCLUDE_DIRECTORIES>)
     zephyr_include_directories($<TARGET_PROPERTY:mbedcrypto_common,INTERFACE_INCLUDE_DIRECTORIES>)
