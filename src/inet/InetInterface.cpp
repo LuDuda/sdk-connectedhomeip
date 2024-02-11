@@ -804,6 +804,16 @@ CHIP_ERROR InterfaceId::InterfaceNameToId(const char * intfName, InterfaceId & i
     return INET_ERROR_UNKNOWN_INTERFACE;
 }
 
+void InterfaceId::ReachabilityHint(const IPAddress & addr) const
+{
+    net_if * const iface = mPlatformInterface ? net_if_get_by_index(mPlatformInterface) : net_if_get_default();
+
+    if (iface) {
+        const struct in6_addr peerAddr = addr.ToIPv6();
+        net_if_nbr_reachability_hint(iface, &peerAddr);
+    }
+}
+
 InterfaceIterator::InterfaceIterator() : mCurrentInterface(net_if_get_by_index(mCurrentId)) {}
 
 bool InterfaceIterator::HasCurrent(void)
@@ -1054,6 +1064,16 @@ uint8_t NetmaskToPrefixLength(const uint8_t * netmask, uint16_t netmaskLen)
 
     return prefixLen;
 }
+
+
+#if !CHIP_SYSTEM_CONFIG_USE_ZEPHYR_NET_IF
+
+void InterfaceId::ReachabilityHint(const IPAddress &)
+{
+    return;
+}
+
+#endif
 
 } // namespace Inet
 } // namespace chip

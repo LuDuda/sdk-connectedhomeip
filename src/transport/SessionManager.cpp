@@ -764,6 +764,11 @@ void SessionManager::SecureUnicastMessageDispatch(const PacketHeader & partialPa
     if (isDuplicate == SessionMessageDelegate::DuplicateMessage::No)
     {
         secureSession->GetSessionMessageCounter().GetPeerMessageCounter().CommitEncryptedUnicast(packetHeader.GetMessageCounter());
+
+        if (payloadHeader.IsAckMsg() && payloadHeader.GetAckMessageCounter().HasValue() && peerAddress.GetIPAddress().IsIPv6())
+        {
+            peerAddress.GetInterface().ReachabilityHint(peerAddress.GetIPAddress());
+        }
     }
 
     // TODO: once mDNS address resolution is available reconsider if this is required
