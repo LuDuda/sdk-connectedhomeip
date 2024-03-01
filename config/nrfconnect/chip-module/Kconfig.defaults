@@ -65,6 +65,12 @@ config COMMON_LIBC_MALLOC_ARENA_SIZE
 config NVS_LOOKUP_CACHE_SIZE
     default 512
 
+config LTO
+    default y
+
+config ISR_TABLES_LOCAL_DECLARATION
+    default y
+
 # ==============================================================================
 # Zephyr networking configuration
 # ==============================================================================
